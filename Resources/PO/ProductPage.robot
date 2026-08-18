@@ -17,6 +17,14 @@ Verify Products Page Not Empty
     ${count}=    Get Element Count    ${INVENTORY_ITEM_NAME}
     Should Be True    ${count} > 0
 
+Verify Product Details Loaded
+     [Arguments]    ${product_name}
+     Page Should Contain    ${product_name}
+
+Select product
+    [Arguments]    ${product_name}
+    Click Link    partial link=${product_name}
+
 Add to Cart
     [Arguments]    ${product_name}
 

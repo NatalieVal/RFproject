@@ -35,6 +35,14 @@ ${PASSWORD}    secret_sauce
 
 *** Test Cases ***
 
+User Should be able to view product details
+    [Documentation]     Opening the details of the item
+    [Tags]              viewItem     standardUser 
+
+    Log                 Starting the test case!     level=INFO
+
+    SwagLabs.WebGui.Log in    ${VALID_USERS}[0]     ${PASSWORD} 
+    SwagLabs.WebGui.View Product Details    ${PRODUCT_NAMES}[1]
 
 User Should be able to add an item to the shopping cart
     [Documentation]     Adding an item to a cart - happy path
