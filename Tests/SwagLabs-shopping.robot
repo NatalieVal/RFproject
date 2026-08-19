@@ -10,7 +10,7 @@ Test Teardown       Common.End Web Test
 # Suite Teardown    Cleanup Testing Data
 
 #Run the script:
-# robot -d Results Tests/SwagLabs-shop.robot
+# robot -d Results Tests/SwagLabs-shopping.robot
 # OR
 # robot -d Results -t 'User Should be able to add an item to a shopping cart' Tests/SwagLabs-shopping.robot
 
