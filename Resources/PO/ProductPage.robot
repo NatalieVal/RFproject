@@ -1,6 +1,7 @@
 *** Settings ***
 Library          SeleniumLibrary
 Library          String
+Resource         ../Common/ProductLocators.robot
 
 *** Variables ***
 
@@ -23,23 +24,17 @@ Select product
 
 Add Product
     [Arguments]    ${product_name}
-    # locate product card and click its Add to cart button
+    ${add_button}=    Get Product Button    ${product_name}    add-to-cart
+    ${remove_button}=    Get Product Button    ${product_name}    remove
 
-    ${add_button}=    Set Variable
-    ...    xpath=//div[@data-test="inventory-item"][.//div[@data-test="inventory-item-name" and normalize-space(.)="${product_name}"]]//button[contains(@data-test, "add-to-cart")]
-    ${remove_button}=    Set Variable
-    ...    xpath=//div[@data-test="inventory-item"][.//div[@data-test="inventory-item-name" and normalize-space(.)="${product_name}"]]//button[contains(@data-test, "remove")]
-    
     Click Button    ${add_button}
     Element Should Be Visible    ${remove_button}
 
 Remove Product
     [Arguments]    ${product_name}
-    # locate product card and click its Remove button
+    ${add_button}=    Get Product Button    ${product_name}    add-to-cart
+    ${remove_button}=    Get Product Button    ${product_name}    remove
 
-    ${add_button}=    Set Variable
-    ...    xpath=//div[@data-test="inventory-item"][.//div[@data-test="inventory-item-name" and normalize-space(.)="${product_name}"]]//button[contains(@data-test, "add-to-cart")]
-    ${remove_button}=    Set Variable
-    ...    xpath=//div[@data-test="inventory-item"][.//div[@data-test="inventory-item-name" and normalize-space(.)="${product_name}"]]//button[contains(@data-test, "remove")]
     Click Button    ${remove_button}
+    Element Should Be Visible    ${add_button}
     Element Should Not Be Visible    ${remove_button}
