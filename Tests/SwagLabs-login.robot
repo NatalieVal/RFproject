@@ -4,9 +4,10 @@ Documentation    This is suite relating to saucedemo shop actions
 Resource    ../Resources/Common/Common.robot
 Resource    ../Resources/PO/LoginPage.robot
 Resource    ../Resources/PO/ProductPage.robot
+Resource    ../Resources/TestData/SwagLabsData.robot
 
 # Suite Setup       Insert Testing Data
-Test Setup          Common.Begin Web Test    https://www.saucedemo.com/
+Test Setup          Common.Begin Web Test    ${URL}
 Test Teardown       Common.End Web Test  
 # Suite Teardown    Cleanup Testing Data
 
@@ -16,67 +17,49 @@ Test Teardown       Common.End Web Test
 # robot -d Results -t 'User Should be able to log in with valid users' Tests/SwagLabs-login.robot
 
 *** Variables ***
-
-${BROWSER}            Chrome
-${URL}                https://www.saucedemo.com/
-
-${PASSWORD}            secret_sauce
-${INVALID_PASSWORD}    test123
-
-@{VALID_USERS}
-...    standard_user
-...    problem_user
-...    performance_glitch_user
-...    error_user
-...    visual_user
-
-${INVALID_USER}         test
+# variables in TestData/SwagLabsData.robot
 
 *** Test Cases ***
 
 User Should be able to log in with valid users
     [Documentation]    Verify that all valid users can log in
     [Tags]             login    positive
+    [Setup]    NONE
+    [Teardown]    NONE
 
-    FOR    ${username}    IN       @{VALID_USERS}
-        Common.Begin Web Test      ${URL} 
-        LoginPage.Enter login data     ${username}    ${PASSWORD}
-        LoginPage.Click Login Button
-        ProductPage.Verify Products Loaded
-        ProductPage.Verify Products Page Not Empty
-        Common.End Web Test
+    FOR    ${username}    IN    @{VALID_USERS}
+        Common.Begin Web Test    ${URL}
+        TRY
+            LoginPage.Enter Login Data    ${username}    ${PASSWORD}
+            LoginPage.Click Login Button
+            ProductPage.Verify Products Loaded
+            ProductPage.Verify Products Page Not Empty
+        FINALLY
+            Common.End Web Test
+        END
     END
 
-User Should Not be able to log in with invalid username
-    [Documentation]    Verify that login fails with invalid username
-    [Tags]             login    negative
-
-    Enter login data    ${INVALID_USER}    ${PASSWORD}  
+User Should Not Be Able To Log In With Invalid Username
+    Enter Login Data    ${INVALID_USER}    ${PASSWORD}
     Click Login Button
-    Verify login error for incorrect login data
+    Verify Login Error    ${INVALID_LOGIN_ERROR}
 
-User Should Not be able to log in with Invalid Password
-    [Documentation]    Verify that login fails with invalid password
-    [Tags]             login    negative
-
-    Enter login data    ${VALID_USERS}[0]    ${INVALID_PASSWORD}  
+User Should Not Be Able To Log In With Invalid Password
+    Enter Login Data    ${VALID_USERS}[0]    ${INVALID_PASSWORD}
     Click Login Button
-    Verify login error for incorrect login data
+    Verify Login Error    ${INVALID_LOGIN_ERROR}
 
 Login With Blank Username Should Show Correct Error Message
-    [Documentation]    Verify that login with empty username shows correct error
-    [Tags]    login    negative
-
-    Enter Username    ${EMPTY}
-    Enter Password    ${PASSWORD}
+    Enter Login Data    ${EMPTY}    ${PASSWORD}
     Click Login Button
-    Verify Login Error For Empty Login Data    username
+    Verify Login Error    ${USERNAME_REQUIRED_ERROR}
 
 Login With Blank Password Should Show Correct Error Message
-    [Documentation]    Verify that login with empty password shows correct error
-    [Tags]    login    negative
-    
-    Enter Username    ${VALID_USERS}[0]
-    Enter Password    ${EMPTY}
+    Enter Login Data    ${VALID_USERS}[0]    ${EMPTY}
     Click Login Button
-    Verify Login Error For Empty Login Data    password
+    Verify Login Error    ${PASSWORD_REQUIRED_ERROR}
+
+Locked-Out User Should Not Be Able To Log In
+    Enter Login Data    locked_out_user    ${PASSWORD}
+    Click Login Button
+    Verify Login Error    ${LOCKED_OUT_ERROR}
