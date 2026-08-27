@@ -20,6 +20,12 @@ Log in
     ProductPage.Verify Products Loaded
     ProductPage.Verify Products Page Not Empty
 
+View Product Details
+
+    [Arguments]    ${product_name}
+    ProductPage.Select Product    ${product_name}
+    ProductPage.Verify Product Details Loaded    ${product_name}
+
 Add Product To Cart
     [Arguments]    ${product}
     ProductPage.Add to Cart    ${product}
