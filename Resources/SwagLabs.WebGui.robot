@@ -21,8 +21,8 @@ Log in
     ProductPage.Verify Products Page Not Empty
 
 View Product Details
-
     [Arguments]    ${product_name}
+
     ProductPage.Select Product    ${product_name}
     ProductDetailsPage.Verify Product Details    ${product_name}
 
@@ -34,40 +34,41 @@ Remove Product From Cart in Product Details Page
 
 Add Product From Products Page
     [Arguments]    ${product}
+
     ProductPage.Add Product    ${product}
 
 Remove Product From Products Page
     [Arguments]    ${product}
+
     ProductPage.Remove Product    ${product}
 
 Go To Cart
-    
-    Click Link    ${SHOPPING_CART_LINK}
-    Page Should Contain    Your Cart
+    CartBadge.Click Cart Link
+   
 
 Remove Product From Cart
     [Arguments]    ${product_name}
+
     CartPage.Remove Product    ${product_name}
 
 Get Number of Products in Cart
-    ${count}=    CartBadge.Get Number Of Products
+    ${count}=    CartBadge.Get Product Count
     RETURN    ${count}
 
 Verify Products in Cart
     [Arguments]    @{product_names}
+
     CartPage.Verify Product In Cart      @{product_names}  
 
 Verify Number of Products in Cart
     [Arguments]    ${expected_count}
 
-    ${cart_count}=    Get Text    ${SHOPPING_CART_BADGE}
-    ${cart_count}=    Convert To Integer    ${cart_count}
-    Should Be Equal As Integers    ${cart_count}    ${expected_count}
+    CartBadge.Verify Product Count    ${expected_count}
     
 Verify Product Not in Cart
     [Arguments]    ${product_name}
 
     CartPage.Verify Product Not In Cart    ${product_name}
 
-Verify no Products in Cart Badge 
-    CartBadge.Verify Cart Is Empty
+Verify Cart Is Empty 
+    CartBadge.Verify Badge Is Hidden

@@ -66,7 +66,7 @@ User Should be able to remove the item from the shopping cart in the product det
     SwagLabs.WebGui.Add Product To Cart in Product Details Page
     SwagLabs.WebGui.Verify Number of Products in Cart    1
     SwagLabs.WebGui.Remove Product From Cart in Product Details Page
-    SwagLabs.WebGui.Verify no Products in Cart Badge
+    SwagLabs.WebGui.Verify Cart Is Empty
 
 User Should be able to add an item to the shopping cart from the "Products" page
     [Documentation]     Adding an item to a cart - happy path

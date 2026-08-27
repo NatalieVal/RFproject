@@ -53,7 +53,7 @@ User Should Not be able to log in with invalid username
 
     Enter login data    ${INVALID_USER}    ${PASSWORD}  
     Click Login Button
-    Verify login error
+    Verify login error for incorrect login data
 
 User Should Not be able to log in with Invalid Password
     [Documentation]    Verify that login fails with invalid password
@@ -61,4 +61,22 @@ User Should Not be able to log in with Invalid Password
 
     Enter login data    ${VALID_USERS}[0]    ${INVALID_PASSWORD}  
     Click Login Button
-    Verify login error
+    Verify login error for incorrect login data
+
+Login With Blank Username Should Show Correct Error Message
+    [Documentation]    Verify that login with empty username shows correct error
+    [Tags]    login    negative
+
+    Enter Username    ${EMPTY}
+    Enter Password    ${PASSWORD}
+    Click Login Button
+    Verify Login Error For Empty Login Data    username
+
+Login With Blank Password Should Show Correct Error Message
+    [Documentation]    Verify that login with empty password shows correct error
+    [Tags]    login    negative
+    
+    Enter Username    ${VALID_USERS}[0]
+    Enter Password    ${EMPTY}
+    Click Login Button
+    Verify Login Error For Empty Login Data    password

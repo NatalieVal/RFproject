@@ -5,15 +5,8 @@ Resource         ../Common/ProductLocators.robot
 
 *** Variables ***
 
-${SHOPPING_CART_LINK}        css=[data-test="shopping-cart-link"]
-${SHOPPING_CART_BADGE}       css=[data-test="shopping-cart-badge"]
 
 *** Keywords ***
-
-Go To Cart
-    
-    Click Link    ${SHOPPING_CART_LINK}
-    Page Should Contain    Your Cart
 
 Verify Product In Cart
     [Arguments]    @{product_names}
