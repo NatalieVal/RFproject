@@ -6,16 +6,22 @@ Test automation project for the SauceDemo web application using Robot Framework 
 
 ```text
 RFproject/
+├── Resources/
+│   ├── Common/
+│   │   ├── Common.robot
+│   │   └── ProductLocators.robot
+│   ├── PO/
+│   │   ├── CartBadge.robot
+│   │   ├── CartPage.robot
+│   │   ├── LoginPage.robot
+│   │   ├── ProductDetailsPage.robot
+│   │   └── ProductPage.robot
+│   ├── TestData/
+│   │   └── SwagLabsData.robot
+│   └── SwagLabs.WebGui.robot
 ├── Tests/
-│   ├── Login/
-│   │   └── SwagLabs-login.robot
-│   └── Shopping/
-│       └── SwagLabs-shop.robot
-│
-└── Resources/
-    ├── Common.robot
-    ├── SwagLabs.WebGui.robot
-    └── PO/
-        ├── LoginPage.robot
-        ├── ProductPage.robot
-        └── CartPage.robot
+│   ├── SwagLabs-login.robot
+│   └── SwagLabs-shopping.robot
+├── .gitignore
+├── README.md
+└── requirements.txt
