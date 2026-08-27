@@ -1,6 +1,7 @@
 *** Settings ***
 Library          SeleniumLibrary
 Library          String
+Resource         ../Common/ProductLocators.robot
 
 *** Variables ***
 
@@ -30,7 +31,5 @@ Verify Product Not In Cart
 
 Remove Product
     [Arguments]    ${product_name}
-    # click remove button for this product
-    ${remove_button}=    Set Variable
-    ...    xpath=//div[@data-test="inventory-item"][.//div[@data-test="inventory-item-name" and normalize-space(.)="${product_name}"]]//button[contains(@data-test, "remove")]
+    ${remove_button}=    Get Product Button    ${product_name}    remove
     Click Button    ${remove_button}

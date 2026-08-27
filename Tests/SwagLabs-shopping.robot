@@ -2,7 +2,7 @@
 Documentation    This is suite relating to saucedemo shop actions
 
 Resource    ../Resources/SwagLabs.WebGui.robot
-Resource    ../Resources/Common.robot
+Resource    ../Resources/Common/Common.robot
 
 # Suite Setup       Insert Testing Data
 Test Setup          Common.Begin Web Test    https://www.saucedemo.com/

@@ -48,7 +48,7 @@ Go To Cart
 Remove Product From Cart
     [Arguments]    ${product_name}
     CartPage.Remove Product    ${product_name}
-    
+
 Get Number of Products in Cart
     ${count}=    CartBadge.Get Number Of Products
     RETURN    ${count}

@@ -1,7 +1,7 @@
 *** Settings ***
 Documentation    This is suite relating to saucedemo shop actions
 
-Resource    ../Resources/Common.robot
+Resource    ../Resources/Common/Common.robot
 Resource    ../Resources/PO/LoginPage.robot
 Resource    ../Resources/PO/ProductPage.robot
 
