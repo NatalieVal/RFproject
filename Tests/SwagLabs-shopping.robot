@@ -3,9 +3,10 @@ Documentation    This is suite relating to saucedemo shop actions
 
 Resource    ../Resources/SwagLabs.WebGui.robot
 Resource    ../Resources/Common/Common.robot
+Resource    ../Resources/TestData/SwagLabsData.robot
 
 # Suite Setup       Insert Testing Data
-Test Setup          Common.Begin Web Test    https://www.saucedemo.com/
+Test Setup          Common.Begin Web Test    ${URL}
 Test Teardown       Common.End Web Test  
 # Suite Teardown    Cleanup Testing Data
 
@@ -15,23 +16,7 @@ Test Teardown       Common.End Web Test
 # robot -d Results -t 'User Should be able to add an item to a shopping cart' Tests/SwagLabs-shopping.robot
 
 *** Variables ***
-
-${PRODUCT_NAME}    Sauce Labs Bolt T-Shirt
-${PASSWORD}    secret_sauce
-@{VALID_USERS}
-...    standard_user
-...    problem_user
-...    performance_glitch_user
-...    error_user
-...    visual_user
-
-@{PRODUCT_NAMES}        
-...    Sauce Labs Bolt T-Shirt
-...    Sauce Labs Backpack
-...    Sauce Labs Bike Light
-...    Sauce Labs Fleece Jacket
-...    Sauce Labs Onesie
-...    Test.allTheThings() T-Shirt (Red)
+# variables in TestData/SwagLabsData.robot
 
 *** Test Cases ***
 
@@ -75,7 +60,7 @@ User Should be able to add an item to the shopping cart from the "Products" page
     Log                 Starting the test case!     level=INFO
 
     SwagLabs.WebGui.Log in    ${VALID_USERS}[0]     ${PASSWORD}       
-    SwagLabs.WebGui.Add Product From Products Page    ${PRODUCT_NAME}
+    SwagLabs.WebGui.Add Product From Products Page    ${PRODUCT_NAMES}[1]
     SwagLabs.WebGui.Go To Cart
     SwagLabs.WebGui.Verify Number of Products in Cart    1
 
