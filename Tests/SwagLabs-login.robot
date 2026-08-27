@@ -1,5 +1,5 @@
 *** Settings ***
-Documentation    This is suite relating to saucedemo shop actions
+Documentation    This suite contains SauceDemo login tests
 
 Resource    ../Resources/Common/Common.robot
 Resource    ../Resources/PO/LoginPage.robot
@@ -11,6 +11,8 @@ Test Setup          Common.Begin Web Test    ${URL}
 Test Teardown       Common.End Web Test  
 # Suite Teardown    Cleanup Testing Data
 
+Test Template    Login Should Fail With Expected Error
+
 #Run the script:
 # robot -d Results Tests/SwagLabs-login.robot
 # OR
@@ -19,11 +21,20 @@ Test Teardown       Common.End Web Test
 *** Variables ***
 # variables in TestData/SwagLabsData.robot
 
+*** Keywords ***
+
+Login Should Fail With Expected Error
+    [Arguments]    ${username}    ${password}    ${expected_error}
+    LoginPage.Enter Login Data    ${username}    ${password}
+    LoginPage.Click Login Button
+    LoginPage.Verify Login Error    ${expected_error}
+
 *** Test Cases ***
 
-User Should be able to log in with valid users
+User Should Be Able To Log In With Valid Users
     [Documentation]    Verify that all valid users can log in
-    [Tags]             login    positive
+    [Tags]    login    positive
+    [Template]    NONE
     [Setup]    NONE
     [Teardown]    NONE
 
@@ -39,27 +50,22 @@ User Should be able to log in with valid users
         END
     END
 
-User Should Not Be Able To Log In With Invalid Username
-    Enter Login Data    ${INVALID_USER}    ${PASSWORD}
-    Click Login Button
-    Verify Login Error    ${INVALID_LOGIN_ERROR}
+Login With Invalid Username Should Fail
+    [Tags]    login    negative
+    ${INVALID_USER}    ${PASSWORD}    ${INVALID_LOGIN_ERROR}
 
-User Should Not Be Able To Log In With Invalid Password
-    Enter Login Data    ${VALID_USERS}[0]    ${INVALID_PASSWORD}
-    Click Login Button
-    Verify Login Error    ${INVALID_LOGIN_ERROR}
+Login With Invalid Password Should Fail
+    [Tags]    login    negative
+    ${VALID_USERS}[0]    ${INVALID_PASSWORD}    ${INVALID_LOGIN_ERROR}
 
-Login With Blank Username Should Show Correct Error Message
-    Enter Login Data    ${EMPTY}    ${PASSWORD}
-    Click Login Button
-    Verify Login Error    ${USERNAME_REQUIRED_ERROR}
+Login With Blank Username Should Show Correct Error
+    [Tags]    login    negative
+    ${EMPTY}    ${PASSWORD}    ${USERNAME_REQUIRED_ERROR}
 
-Login With Blank Password Should Show Correct Error Message
-    Enter Login Data    ${VALID_USERS}[0]    ${EMPTY}
-    Click Login Button
-    Verify Login Error    ${PASSWORD_REQUIRED_ERROR}
+Login With Blank Password Should Show Correct Error
+    [Tags]    login    negative
+    ${VALID_USERS}[0]    ${EMPTY}    ${PASSWORD_REQUIRED_ERROR}
 
 Locked-Out User Should Not Be Able To Log In
-    Enter Login Data    locked_out_user    ${PASSWORD}
-    Click Login Button
-    Verify Login Error    ${LOCKED_OUT_ERROR}
+    [Tags]    login    negative
+    locked_out_user    ${PASSWORD}    ${LOCKED_OUT_ERROR}
