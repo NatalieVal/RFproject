@@ -23,17 +23,14 @@ Verify Product In Cart
         Page Should Contain    ${product_name}
     END
 
-
-Verify Number Of Products
-    [Arguments]    ${expected_count}
-    Element Text Should Be    ${SHOPPING_CART_BADGE}    ${expected_count}
-
-Get Number Of Products
-    ${cart_count}=    Get Text    ${SHOPPING_CART_BADGE}
-    ${cart_count}=    Convert To Integer    ${cart_count}
-    RETURN    ${cart_count}
-
 Verify Product Not In Cart
     [Arguments]    ${product_name}
 
     Page Should Not Contain    ${product_name}
+
+Remove Product
+    [Arguments]    ${product_name}
+    # click remove button for this product
+    ${remove_button}=    Set Variable
+    ...    xpath=//div[@data-test="inventory-item"][.//div[@data-test="inventory-item-name" and normalize-space(.)="${product_name}"]]//button[contains(@data-test, "remove")]
+    Click Button    ${remove_button}

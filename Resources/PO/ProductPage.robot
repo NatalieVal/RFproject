@@ -17,16 +17,13 @@ Verify Products Page Not Empty
     ${count}=    Get Element Count    ${INVENTORY_ITEM_NAME}
     Should Be True    ${count} > 0
 
-Verify Product Details Loaded
-     [Arguments]    ${product_name}
-     Page Should Contain    ${product_name}
-
 Select product
     [Arguments]    ${product_name}
     Click Link    partial link=${product_name}
 
-Add to Cart
+Add Product
     [Arguments]    ${product_name}
+    # locate product card and click its Add to cart button
 
     ${add_button}=    Set Variable
     ...    xpath=//div[@data-test="inventory-item"][.//div[@data-test="inventory-item-name" and normalize-space(.)="${product_name}"]]//button[contains(@data-test, "add-to-cart")]
@@ -36,8 +33,10 @@ Add to Cart
     Click Button    ${add_button}
     Element Should Be Visible    ${remove_button}
 
-Remove from Cart
+Remove Product
     [Arguments]    ${product_name}
+    # locate product card and click its Remove button
+
     ${add_button}=    Set Variable
     ...    xpath=//div[@data-test="inventory-item"][.//div[@data-test="inventory-item-name" and normalize-space(.)="${product_name}"]]//button[contains(@data-test, "add-to-cart")]
     ${remove_button}=    Set Variable
